@@ -9,7 +9,7 @@ log.basicConfig(level=log.ERROR)
 
 load_dotenv()
 
-secretKey = os.getenv("SECRET_KEY")
+secret_key = "secret_key"
 
 
 def token_required(f):
@@ -24,7 +24,7 @@ def token_required(f):
             }, 401
 
         try:
-            data = jwt.decode(token, secretKey, algorithms=["HS256"])
+            data = jwt.decode(token, secret_key, algorithms=["HS256"])
             return f(decoded_token=data, *args, **kwargs)
 
         except jwt.ExpiredSignatureError:
