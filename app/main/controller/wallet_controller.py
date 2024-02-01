@@ -49,7 +49,7 @@ class Wallet(Resource):
     @ns.expect(_disable_wallet, validate=True)
     @token_required
     def patch(self, decoded_token):
-        """View wallet balance"""
+        """Disable wallet"""
         wallet_id = decoded_token["wallet_id"]
         args = _disable_wallet.parse_args(req=request)
         is_disabled = args["is_disabled"]

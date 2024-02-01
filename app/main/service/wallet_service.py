@@ -18,7 +18,7 @@ def enable_wallet(customer_id):
     try:
         wallet = wallet_model.enable_wallet(customer_id)
         if not wallet:
-            return {"status": "error", "message": "Wallet not found"}, 404
+            return {"status": "error", "message": "Already enabled"}, 400
 
         response_object = {"data": {"wallet": wallet}, "status": "success"}
         return response_object, 200

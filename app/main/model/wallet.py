@@ -58,6 +58,9 @@ class Wallet(db.Model):
             if not wallet:
                 return None
 
+            if wallet.status == "enabled":
+                return False
+            
             wallet.status = "enabled"
             wallet.enabled_at = datetime.datetime.utcnow()
 

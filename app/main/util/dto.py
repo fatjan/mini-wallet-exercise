@@ -12,7 +12,7 @@ class WalletDto:
         "customer_xid",
         type=str,
         required=True,
-        help="Customer xid is required for wallet initialization",
+        help="Customer XID is required for wallet initialization",
     )
 
     wallet_form_parser = reqparse.RequestParser()
@@ -33,3 +33,35 @@ class WalletDto:
         required=True,
         help="Wallet status is required for disabling the wallet",
     )
+
+error_model = api.model("Error", {
+    "status": fields.String(default="fail"),
+    "data": fields.Nested(api.model("ErrorData", {
+        "error": fields.Raw()
+    }))
+})
+
+
+# Custom error handler
+@api.errorhandler
+def handle_error(error):
+    status_code = getattr(error, "code", 500)  # Get the HTTP status code
+
+    response = {
+        "status": "fail",
+        "data": {
+            "error": error.data["message"]
+        }
+    }
+
+    return response, status_code
+
+
+# Define your resource
+parser = reqparse.RequestParser()
+parser.add_argument("customer_xid", type=int, required=True)
+
+resource_fields = {
+    "status": fields.String(default="success"),
+    "data": fields.Raw()
+}
