@@ -38,4 +38,6 @@ class Transaction(db.Model):
 
     def view_wallet_transactions(self, wallet_id):
         transactions = Transaction.query.filter_by(wallet_id=wallet_id).all()
+        if not transactions:
+            return []
         return [transaction.serialize() for transaction in transactions]

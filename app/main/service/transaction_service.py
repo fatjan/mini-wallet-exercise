@@ -6,9 +6,6 @@ transaction_model = Transaction()
 def view_wallet_transactions(wallet_id):
     try:
         transactions = transaction_model.view_wallet_transactions(wallet_id)
-        if not transactions:
-            return {"status": "error", "message": "Wallet not found"}, 404
-
         response_object = {"data": {"transactions": transactions}, "status": "success"}
         return response_object, 200
     except Exception as e:
