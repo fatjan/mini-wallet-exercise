@@ -11,5 +11,5 @@ class WalletTransaction(Resource):
     @token_required
     def get(self, decoded_token):
         """View wallet transactions"""
-        customer_id = decoded_token["customer_id"]
-        return view_wallet_transactions(customer_id)
+        wallet_id = decoded_token["wallet_id"]
+        return view_wallet_transactions(wallet_id)

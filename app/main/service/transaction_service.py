@@ -3,9 +3,9 @@ from app.main.model.transaction import Transaction
 
 transaction_model = Transaction()
 
-def view_wallet_transactions(customer_id):
+def view_wallet_transactions(wallet_id):
     try:
-        transactions = transaction_model.view_wallet_transactions(customer_id)
+        transactions = transaction_model.view_wallet_transactions(wallet_id)
         if not transactions:
             return {"status": "error", "message": "Wallet not found"}, 404
 

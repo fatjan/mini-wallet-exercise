@@ -10,6 +10,7 @@ class Transaction(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     public_id = db.Column(db.String(100), nullable=False)
+    wallet_id = db.Column(db.Integer, db.ForeignKey("wallet.id"), nullable=False)
     status = db.Column(db.String(100), nullable=False)
     transacted_at = db.Column(db.DateTime, nullable=False)
     type = db.Column(db.String(100), nullable=False)
@@ -35,6 +36,6 @@ class Transaction(db.Model):
         db.session.commit()
     
 
-    def view_wallet_transactions(self, customer_id):
-        transactions = Transaction.query.filter_by(customer_id=customer_id).all()
+    def view_wallet_transactions(self, wallet_id):
+        transactions = Transaction.query.filter_by(wallet_id=wallet_id).all()
         return [transaction.serialize() for transaction in transactions]

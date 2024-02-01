@@ -44,10 +44,11 @@ def error_handler(error):
     return {"status": "error", "message": message}, 500
 
 
-def create_token(customer_id, secret_key="secret_key"):
+def create_token(customer_id, wallet_id, secret_key="secret_key"):
     token = jwt.encode(
         {
             "customer_id": customer_id,
+            "wallet_id": wallet_id,
             "exp": datetime.utcnow() + timedelta(days=1),
         },
         secret_key,

@@ -36,7 +36,7 @@ class Wallet(db.Model):
         try:
             wallet = self.query.filter_by(owned_by=customer_id).first()
             if wallet:
-                token = create_token(customer_id)
+                token = create_token(customer_id, wallet_id=wallet.id)
                 return token
             
             self.public_id = str(uuid.uuid4())
@@ -45,7 +45,7 @@ class Wallet(db.Model):
             self.balance = 0
 
             self.save()
-            token = create_token(customer_id)
+            token = create_token(customer_id, self.id)
             return token
 
         except Exception as e:
