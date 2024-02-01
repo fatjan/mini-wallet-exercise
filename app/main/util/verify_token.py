@@ -18,10 +18,14 @@ def token_required(f):
         token = None
         if "Authorization" in request.headers:
             token_string = request.headers.get("Authorization")
+            if "Token" not in token_string:
+                return {
+                    "message": "Access Denied: Unauthorized operation. Incorrect token."
+                }, 401
             token = token_string.split()[1]
         if not token:
             return {
-                "message": "Access Denied: Unauthorized operation. Please log in to proceed."
+                "message": "Access Denied: Unauthorized operation. Please initialize wallet to proceed."
             }, 401
 
         try:
