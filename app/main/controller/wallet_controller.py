@@ -1,6 +1,10 @@
 from flask_restx import Resource
 from flask import request
-from ..service.wallet_service import init_wallet, enable_wallet, view_wallet_balance
+from ..service.wallet_service import (
+    init_wallet, 
+    enable_wallet, 
+    view_wallet_balance,
+)
 from ...extensions import ns
 from ..util.dto import WalletDto
 from ..util.verify_token import token_required
