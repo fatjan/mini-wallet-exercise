@@ -76,9 +76,9 @@ class Transaction(db.Model):
         transacted_at = convert_to_local_time(self.transacted_at)
         return {
             "id": self.public_id,
-            "withdrawed_by": self.customer_id,
+            "withdrawn_by": self.customer_id,
             "status": self.status,
-            "withdrawed_at": transacted_at.isoformat() if self.transacted_at else None,
+            "withdrawn_at": transacted_at.isoformat() if self.transacted_at else None,
             "type": self.type,
             "amount": self.amount,
             "reference_id": self.reference_id,
