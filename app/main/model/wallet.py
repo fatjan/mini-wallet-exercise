@@ -72,7 +72,7 @@ class Wallet(db.Model):
     def view_wallet_balance(self, customer_id):
         try:
             wallet = self.query.filter_by(owned_by=customer_id).first()
-            if not wallet:
+            if not wallet or wallet.status == "disabled":
                 return None
 
             return wallet.serialize()
