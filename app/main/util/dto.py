@@ -23,7 +23,7 @@ class WalletDto:
         help="Amount is required for wallet operation",
     )
     wallet_form_parser.add_argument(
-        "reference_id", type=str, help="Reference Identifier for the wallet operation"
+        "reference_id", type=str, required=True, help="Reference Identifier for the wallet operation"
     )
 
     disable_wallet_form_parser = reqparse.RequestParser()

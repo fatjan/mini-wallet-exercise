@@ -11,7 +11,6 @@ from ..util.verify_token import token_required
 
 wallet_dto = WalletDto()
 _init = wallet_dto.init_form_parser
-_wallet = wallet_dto.wallet_form_parser
 _disable_wallet = wallet_dto.disable_wallet_form_parser
 
 

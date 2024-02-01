@@ -80,3 +80,23 @@ class Wallet(db.Model):
         except Exception as e:
             logging.exception("An error occurred while viewing wallet balance: %s", str(e))
             return None
+
+
+    def update_balance(self, id, type, amount):
+        try:
+            wallet = self.query.filter_by(id=id).first()
+            if not wallet:
+                return None
+
+            if type == "deposit":
+                wallet.balance += amount
+            else:
+                wallet.balance -= amount
+
+            wallet.save()
+
+            return wallet.serialize()
+
+        except Exception as e:
+            logging.exception("An error occurred while updating wallet balance: %s", str(e))
+            return None
