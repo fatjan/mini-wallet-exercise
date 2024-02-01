@@ -34,6 +34,11 @@ class Wallet(db.Model):
 
     def init_wallet(self, customer_id):
         try:
+            wallet = self.query.filter_by(owned_by=customer_id).first()
+            if wallet:
+                token = create_token(customer_id)
+                return token
+            
             self.public_id = str(uuid.uuid4())
             self.owned_by = customer_id
             self.status = "disabled"
@@ -53,12 +58,25 @@ class Wallet(db.Model):
             if not wallet:
                 return None
 
-            self.status = "enabled"
-            self.enabled_at = datetime.datetime.utcnow()
+            wallet.status = "enabled"
+            wallet.enabled_at = datetime.datetime.utcnow()
 
-            self.save()
-            return self.serialize()
+            wallet.save()
+            return wallet.serialize()
 
         except Exception as e:
             logging.exception("An error occurred while enabling a wallet: %s", str(e))
+            return None
+    
+
+    def view_wallet_balance(self, customer_id):
+        try:
+            wallet = self.query.filter_by(owned_by=customer_id).first()
+            if not wallet:
+                return None
+
+            return self.serialize()
+
+        except Exception as e:
+            logging.exception("An error occurred while viewing wallet balance: %s", str(e))
             return None
