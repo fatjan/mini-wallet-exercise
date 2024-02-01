@@ -23,7 +23,7 @@ def test(coverage):
 
     args = [TEST_PATH, "--verbose"]
     if coverage:
-        args.append("--cov=hidden_gem_backend")
+        args.extend(["--cov=app", "--cov-report=html", "--cov-report=xml"])
     rv = pytest.main(args)
     exit(rv)
 
