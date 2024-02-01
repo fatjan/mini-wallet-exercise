@@ -75,7 +75,7 @@ class Wallet(db.Model):
             if not wallet:
                 return None
 
-            return self.serialize()
+            return wallet.serialize()
 
         except Exception as e:
             logging.exception("An error occurred while viewing wallet balance: %s", str(e))
