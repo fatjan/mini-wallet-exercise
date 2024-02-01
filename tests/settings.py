@@ -1,4 +1,4 @@
-from .settings import get_db_uri
+from app.settings import get_db_uri
 
 DATABASE_URI = get_db_uri(db_name="testdb")
 ENV = "test"

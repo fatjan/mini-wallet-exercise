@@ -8,7 +8,7 @@ error_message = "Input payload validation failed"
 
 class TestWalletEndpoints(TestCase):
     def setUp(self):
-        self.app = create_app(config_object="app.test_settings")
+        self.app = create_app(config_object="tests.settings")
         self.app_context = self.app.app_context()
         self.app_context.push()
 
