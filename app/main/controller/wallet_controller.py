@@ -4,6 +4,7 @@ from ..service.wallet_service import (
     init_wallet, 
     enable_wallet, 
     view_wallet_balance,
+    disable_wallet
 )
 from ...extensions import ns
 from ..util.dto import WalletDto
@@ -42,3 +43,14 @@ class Wallet(Resource):
         """View wallet balance"""
         customer_id = decoded_token["customer_id"]
         return view_wallet_balance(customer_id)
+    
+    @ns.doc(security="bearer")
+    @ns.doc(responses={400: "Validation Error"})
+    @ns.expect(_disable_wallet, validate=True)
+    @token_required
+    def patch(self, decoded_token):
+        """View wallet balance"""
+        wallet_id = decoded_token["wallet_id"]
+        args = _disable_wallet.parse_args(req=request)
+        is_disabled = args["is_disabled"]
+        return disable_wallet(wallet_id, is_disabled)

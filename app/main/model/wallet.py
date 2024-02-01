@@ -100,3 +100,19 @@ class Wallet(db.Model):
         except Exception as e:
             logging.exception("An error occurred while updating wallet balance: %s", str(e))
             return None
+    
+    def disable_wallet(self, wallet_id, is_disabled=True):
+        try:
+            wallet = self.query.filter_by(id=wallet_id).first()
+            if not wallet:
+                return None
+
+            if is_disabled:
+                wallet.status = "disabled"
+       
+            wallet.save()
+            return wallet.serialize()
+
+        except Exception as e:
+            logging.exception("An error occurred while disabling a wallet: %s", str(e))
+            return None
