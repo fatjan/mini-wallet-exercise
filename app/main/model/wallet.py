@@ -12,7 +12,7 @@ class Wallet(db.Model):
     public_id = db.Column(db.String(100), nullable=False)
     owned_by = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(100), nullable=False)
-    enabled_at = db.Column(db.DateTime, nullable=False)
+    enabled_at = db.Column(db.DateTime)
     balance = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
@@ -46,19 +46,19 @@ class Wallet(db.Model):
         except Exception as e:
             logging.exception("An error occurred while initiaing a wallet: %s", str(e))
             return None
-        
+
     def enable_wallet(self, customer_id):
         try:
             wallet = self.query.filter_by(owned_by=customer_id).first()
             if not wallet:
                 return None
-            
+
             self.status = "enabled"
             self.enabled_at = datetime.datetime.utcnow()
 
             self.save()
             return self.serialize()
-        
+
         except Exception as e:
             logging.exception("An error occurred while enabling a wallet: %s", str(e))
             return None

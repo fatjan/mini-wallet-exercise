@@ -13,6 +13,7 @@ from app.extensions import (
 
 from app.main.controller.wallet_controller import ns as wallet_ns
 
+
 def create_app(config_object="app.settings"):
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)

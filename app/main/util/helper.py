@@ -43,6 +43,7 @@ def error_handler(error):
 
     return {"status": "error", "message": message}, 500
 
+
 def create_token(customer_id, secret_key="secret_key"):
     token = jwt.encode(
         {
