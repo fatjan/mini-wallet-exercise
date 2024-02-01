@@ -24,7 +24,7 @@ class WalletDeposit(Resource):
     @ns.doc(security="bearer")
     @ns.doc(responses={400: "Validation Error"})
     @token_required
-    def get(self, decoded_token):
+    def post(self, decoded_token):
         """View wallet transactions"""
         customer_id = decoded_token["customer_id"]
         wallet_id = decoded_token["wallet_id"]
@@ -39,7 +39,7 @@ class WalletWithdrawal(Resource):
     @ns.doc(security="bearer")
     @ns.doc(responses={400: "Validation Error"})
     @token_required
-    def get(self, decoded_token):
+    def post(self, decoded_token):
         """View wallet transactions"""
         customer_id = decoded_token["customer_id"]
         wallet_id = decoded_token["wallet_id"]

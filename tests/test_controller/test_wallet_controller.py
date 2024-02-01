@@ -6,7 +6,7 @@ from app.main.util.helper import create_token
 
 error_message = "Input payload validation failed"
 
-class TestReportEndpoints(TestCase):
+class TestWalletEndpoints(TestCase):
     def setUp(self):
         self.app = create_app(config_object="app.test_settings")
         self.app_context = self.app.app_context()
