@@ -16,8 +16,8 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        if "X-API-KEY" in request.headers:
-            token = request.headers.get("X-API-KEY")
+        if "Token" in request.headers:
+            token = request.headers.get("Token")
         if not token:
             return {
                 "message": "Access Denied: Unauthorized operation. Please log in to proceed."
