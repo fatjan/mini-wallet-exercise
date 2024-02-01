@@ -12,6 +12,7 @@ from app.extensions import (
 )
 
 from app.main.controller.wallet_controller import ns as wallet_ns
+from app.main.controller.transaction_controller import ns as transaction_ns
 
 
 def create_app(config_object="app.settings"):
@@ -31,6 +32,7 @@ def register_extensions(app):
     db.init_app(app)
     api.init_app(app)
     api.add_namespace(wallet_ns)
+    api.add_namespace(transaction_ns)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
     return None
