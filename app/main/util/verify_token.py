@@ -16,8 +16,9 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        if "Token" in request.headers:
-            token = request.headers.get("Token")
+        if "Authorization" in request.headers:
+            token_string = request.headers.get("Authorization")
+            token = token_string.split()[1]
         if not token:
             return {
                 "message": "Access Denied: Unauthorized operation. Please log in to proceed."

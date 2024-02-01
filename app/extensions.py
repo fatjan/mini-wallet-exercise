@@ -8,7 +8,7 @@ import pymysql
 
 pymysql.install_as_MySQLdb()
 
-authorizations = {"bearer": {"type": "apiKey", "in": "header", "name": "Token"}}
+authorizations = {"bearer": {"type": "apiKey", "in": "header", "name": "Authorization"}}
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
