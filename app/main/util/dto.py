@@ -40,28 +40,3 @@ error_model = api.model("Error", {
         "error": fields.Raw()
     }))
 })
-
-
-# Custom error handler
-@api.errorhandler
-def handle_error(error):
-    status_code = getattr(error, "code", 500)  # Get the HTTP status code
-
-    response = {
-        "status": "fail",
-        "data": {
-            "error": error.data["message"]
-        }
-    }
-
-    return response, status_code
-
-
-# Define your resource
-parser = reqparse.RequestParser()
-parser.add_argument("customer_xid", type=int, required=True)
-
-resource_fields = {
-    "status": fields.String(default="success"),
-    "data": fields.Raw()
-}
