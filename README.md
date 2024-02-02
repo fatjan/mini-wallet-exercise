@@ -1,67 +1,66 @@
-# mini-wallet-exercise
-An API backend service for managing a simple mini wallet
+# Mini Wallet Exercise
 
+This repository contains an API backend service for managing a simple mini wallet.
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
     ```bash
     git clone git@github.com:fatjan/mini-wallet-exercise.git
     ```
 
-2. Create virtual environment:
+2. **Create a virtual environment:**
     ```bash
     python -m venv venv
     ```
 
-3. Activate virtual environment:
+3. **Activate the virtual environment:**
     ```bash
     source venv/bin/activate
     ```
 
-4. Install dependencies:
+4. **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-5. Copy .env-template file and rename it to .env, fill in the required credentials
+5. **Set up MySQL:**
+    - Ensure MySQL is installed on your machine. If not, you can download it [here](https://dev.mysql.com/downloads/).
+    - Run MySQL locally and create two databases: one for development (`wallet_db`) and another for testing (`test_db`).
 
-6. Run the application:
+6. **Configure Environment:**
+    - Copy the `.env-template` file and rename it to `.env`.
+    - Fill in the required credentials, ensuring the database name matches the ones created in step 5.
+
+7. **Run the application:**
     ```bash
     flask run
     ```
 
-7. Run the tests:
+8. **Run the tests:**
     ```bash
     flask test
     ```
-    or 
-    ```bash
-    pytest
-    ```
-    Run a specific test file:
-    ```bash
-    pytest -k path-to-test-file
-    ```
-    Run a specific test file while seeing the print statement:
-    ```bash
-    pytest -k path-to-test-file -s
-    ```
 
-8. DB related:
+9. **Database Operations:**
     ```bash
     flask db init
     flask db migrate
     flask db upgrade
     ```
 
-9. Format the python file:
-    ```bash
-    black path-to-file
-    ```
+10. **Format Python Files:**
+    - To format a specific file:
+        ```bash
+        black path-to-file
+        ```
+    - To format all files in a directory:
+        ```bash
+        black .
+        ```
 
-    or in a directory consisting the files:
-    ```bash
-    black .
-    ```
+11. **Reporting Issues:**
+    If you encounter any issues, please create a new [issue here](https://github.com/fatjan/mini-wallet-exercise/issues).
+
+Feel free to reach out if you have any questions or need further assistance!
