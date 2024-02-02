@@ -8,7 +8,7 @@ def fake_id():
     return str(uuid.uuid4())
 
 
-class TestReport(unittest.TestCase):
+class TestWalletModel(unittest.TestCase):
     def setUp(self):
         self.app = create_app(config_object="tests.settings")
         self.app_context = self.app.app_context()
