@@ -53,7 +53,7 @@ class Wallet(db.Model):
             self.balance = 0
 
             self.save()
-            token = create_token(customer_id, self.id)
+            token = create_token(customer_id, self.public_id)
             return token
 
         except Exception as e:
@@ -104,11 +104,12 @@ class Wallet(db.Model):
             elif type == "withdraw":
                 if amount > wallet.balance:
                     return None
+                
                 wallet.balance -= amount
 
             wallet.save()
 
-            return wallet.serialize()
+            return wallet
 
         except Exception as e:
             logging.exception(
@@ -133,10 +134,8 @@ class Wallet(db.Model):
             return None
 
     def get_wallet(self, wallet_id):
-        print("wallet_id ini", wallet_id)
         try:
             wallet = self.query.filter_by(public_id=wallet_id).first()
-            print("wallet ini", wallet)
             if not wallet:
                 return None
 
