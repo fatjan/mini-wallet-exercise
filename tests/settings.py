@@ -1,6 +1,6 @@
 from app.settings import get_db_uri
 
-DATABASE_URI = get_db_uri(db_name="testdb")
+DATABASE_URI = get_db_uri(db_name="test_db")
 ENV = "test"
 TESTING = True
 SQLALCHEMY_DATABASE_URI = DATABASE_URI
