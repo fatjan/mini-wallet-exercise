@@ -82,6 +82,7 @@ This repository hosts an API backend service for managing a simple mini wallet.
     ```
 
 10. **Run the application using Docker:**
+    - Ensure Docker is installed and running on your machine. If not, you can download it [here](https://www.docker.com/get-started).
     - Build the Docker image:
         ```bash
         docker build -t mini_wallet_app .
