@@ -31,7 +31,7 @@ def view_wallet_balance(customer_id):
     try:
         wallet = wallet_model.view_wallet_balance(customer_id)
         if not wallet:
-            return {"status": "fail", "message": "Wallet disabled"}, 404
+            return {"status": "fail", "data": {"error": "Wallet disabled"}}, 404
 
         response_object = {"data": {"wallet": wallet}, "status": "success"}
         return response_object, 200
