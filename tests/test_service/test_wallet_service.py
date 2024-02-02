@@ -2,7 +2,12 @@ import uuid
 from unittest import TestCase
 from unittest.mock import patch
 from app import create_app
-from app.main.service.wallet_service import init_wallet, enable_wallet, view_wallet_balance, disable_wallet
+from app.main.service.wallet_service import (
+    init_wallet,
+    enable_wallet,
+    view_wallet_balance,
+    disable_wallet,
+)
 
 
 def fake_id():
@@ -45,7 +50,7 @@ class TestWalletService(TestCase):
             "id": fake_id(),
             "owned_by": customer_id,
             "status": "enabled",
-            "balance": 0
+            "balance": 0,
         }
         mock_enable_wallet.return_value = expected_response
 
@@ -58,7 +63,7 @@ class TestWalletService(TestCase):
         self.assertEqual(response["status"], "success")
         self.assertEqual(result, expected_response)
         mock_enable_wallet.assert_called_once_with(customer_id)
-    
+
     @patch("app.main.model.wallet.Wallet.enable_wallet")
     def test_enable_wallet_fail(self, mock_enable_wallet):
         # Arrange
@@ -73,7 +78,7 @@ class TestWalletService(TestCase):
         self.assertEqual(response["status"], "fail")
         self.assertEqual(response["data"]["error"], "Already enabled")
         mock_enable_wallet.assert_called_once_with(customer_id)
-    
+
     @patch("app.main.model.wallet.Wallet.view_wallet_balance")
     def test_view_wallet_balance_success(self, mock_view_wallet_balance):
         # Arrange
@@ -82,7 +87,7 @@ class TestWalletService(TestCase):
             "id": fake_id(),
             "owned_by": customer_id,
             "status": "enabled",
-            "balance": 0
+            "balance": 0,
         }
         mock_view_wallet_balance.return_value = expected_response
 
@@ -95,7 +100,7 @@ class TestWalletService(TestCase):
         self.assertEqual(response["status"], "success")
         self.assertEqual(result, expected_response)
         mock_view_wallet_balance.assert_called_once_with(customer_id)
-    
+
     @patch("app.main.model.wallet.Wallet.view_wallet_balance")
     def test_view_wallet_balance_fail(self, mock_view_wallet_balance):
         # Arrange
@@ -110,7 +115,7 @@ class TestWalletService(TestCase):
         self.assertEqual(response["status"], "fail")
         self.assertEqual(response["data"]["error"], "Wallet disabled")
         mock_view_wallet_balance.assert_called_once_with(customer_id)
-    
+
     @patch("app.main.model.wallet.Wallet.disable_wallet")
     def test_disable_wallet(self, mock_disable_wallet):
         # Arrange
@@ -120,7 +125,7 @@ class TestWalletService(TestCase):
             "id": fake_id(),
             "owned_by": fake_id(),
             "status": "disabled",
-            "balance": 0
+            "balance": 0,
         }
         mock_disable_wallet.return_value = expected_response
 
