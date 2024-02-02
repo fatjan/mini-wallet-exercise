@@ -36,7 +36,7 @@ class Wallet(db.Model):
         try:
             wallet = self.query.filter_by(owned_by=customer_id).first()
             if wallet:
-                token = create_token(customer_id, wallet_id=wallet.id)
+                token = create_token(customer_id, wallet_id=wallet.public_id)
                 return token
             
             self.public_id = str(uuid.uuid4())
@@ -85,15 +85,17 @@ class Wallet(db.Model):
             return None
 
 
-    def update_balance(self, id, type, amount):
+    def update_balance(self, wallet_id, type, amount):
         try:
-            wallet = self.query.filter_by(id=id).first()
-            if not wallet:
+            wallet = self.query.filter_by(public_id=wallet_id).first()
+            if not wallet or wallet.status == "disabled":
                 return None
 
             if type == "deposit":
                 wallet.balance += amount
-            else:
+            elif type == "withdraw":
+                if amount > wallet.balance:
+                    return None
                 wallet.balance -= amount
 
             wallet.save()
@@ -106,8 +108,8 @@ class Wallet(db.Model):
     
     def disable_wallet(self, wallet_id, is_disabled=True):
         try:
-            wallet = self.query.filter_by(id=wallet_id).first()
-            if not wallet:
+            wallet = self.query.filter_by(public_id=wallet_id).first()
+            if not wallet or wallet.status == "disabled":
                 return None
 
             if is_disabled:
