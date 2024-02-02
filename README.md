@@ -108,4 +108,4 @@ This repository hosts an API backend service for managing a simple mini wallet.
 13. **Reporting Issues:**
     If you encounter any issues, please create a new [issue here](https://github.com/fatjan/mini-wallet-exercise/issues).
 
-Feel free to reach out if you have any questions or need further assistance!
+
