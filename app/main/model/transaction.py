@@ -51,7 +51,9 @@ class Transaction(db.Model):
 
     def view_wallet_transactions(self, wallet_id):
         try:
-            transactions = Transaction.query.filter_by(wallet_id=wallet_id).all()
+            wallet_model = Wallet()
+            wallet = wallet_model.get_wallet(wallet_id)
+            transactions = Transaction.query.filter_by(wallet_id=wallet.id).all()
             if not transactions:
                 return []
             return [transaction.serialize() for transaction in transactions]
@@ -86,12 +88,23 @@ class Transaction(db.Model):
             if not wallet:
                 return None
 
-            if transaction_type == "deposit":
-                wallet_model.update_balance(wallet_id, "deposit", amount)
-            else:
-                wallet_model.update_balance(wallet_id, "withdrawal", amount)
+            try:
+                if transaction_type == "deposit":
+                    updated_wallet = wallet_model.update_balance(wallet_id, "deposit", amount)
+                else:
+                    updated_wallet = wallet_model.update_balance(wallet_id, "withdraw", amount)
+                
+                if updated_wallet:
+                    return updated_wallet.id
+                else:
+                    return None
+            
+            except Exception as e:
+                logging.exception(
+                    "An error occurred while updating wallet balance: %s", str(e)
+                )
+                return None
 
-            return wallet.id
         except Exception as e:
             logging.exception(
                 "An error occurred while updating wallet balance: %s", str(e)
@@ -104,8 +117,7 @@ class Transaction(db.Model):
             if ref_exist:
                 return None
             
-            wallet_db_id = self.update_wallet_balance(wallet_id, "deposit", amount)
-
+            wallet_db_id = self.update_wallet_balance(wallet_id, "deposit", amount)     
             transaction = Transaction(
                 public_id=str(uuid.uuid4()),
                 wallet_id=wallet_db_id,
@@ -149,10 +161,12 @@ class Transaction(db.Model):
         try:
             ref_exist = self.check_reference(reference_id)
             if ref_exist:
-                return None
+                return "exists"
             
             wallet_db_id = self.update_wallet_balance(wallet_id, "withdraw", amount)
-
+            if not wallet_db_id:
+                return None
+            
             transaction = Transaction(
                 public_id=str(uuid.uuid4()),
                 wallet_id=wallet_db_id,
