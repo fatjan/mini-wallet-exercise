@@ -19,18 +19,26 @@ class Wallet(db.Model):
         return f"<Wallet(public_id={self.public_id}, owned_by={self.owned_by}, status={self.status})>"
 
     def serialize(self):
-        enabled_at = convert_to_local_time(self.enabled_at)
-        return {
-            "id": self.public_id,
-            "owned_by": self.owned_by,
-            "status": self.status,
-            "enabled_at": enabled_at.isoformat() if self.enabled_at else None,
-            "balance": self.balance,
-        }
+        try:
+            enabled_at = convert_to_local_time(self.enabled_at)
+            return {
+                "id": self.public_id,
+                "owned_by": self.owned_by,
+                "status": self.status,
+                "enabled_at": enabled_at.isoformat() if self.enabled_at else None,
+                "balance": self.balance,
+            }
+        except Exception as e:
+            logging.exception("An error occurred while serializing wallet: %s", str(e))
+            return None
 
     def save(self):
-        db.session.add(self)
-        db.session.commit()
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except Exception as e:
+            logging.exception("An error occurred while saving wallet: %s", str(e))
+            db.session.rollback()
 
     def init_wallet(self, customer_id):
         try:
