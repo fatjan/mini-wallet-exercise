@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash
 from app.settings import SECRET_KEY
 
+
 def convert_to_local_time(utc_datetime):
     now_timestamp = time.time()
     offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(

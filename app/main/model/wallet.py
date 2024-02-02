@@ -46,7 +46,7 @@ class Wallet(db.Model):
             if wallet:
                 token = create_token(customer_id, wallet_id=wallet.public_id)
                 return token
-            
+
             self.public_id = str(uuid.uuid4())
             self.owned_by = customer_id
             self.status = "disabled"
@@ -68,7 +68,7 @@ class Wallet(db.Model):
 
             if wallet.status == "enabled":
                 return False
-            
+
             wallet.status = "enabled"
             wallet.enabled_at = datetime.datetime.utcnow()
 
@@ -78,7 +78,6 @@ class Wallet(db.Model):
         except Exception as e:
             logging.exception("An error occurred while enabling a wallet: %s", str(e))
             return None
-    
 
     def view_wallet_balance(self, customer_id):
         try:
@@ -89,9 +88,10 @@ class Wallet(db.Model):
             return wallet.serialize()
 
         except Exception as e:
-            logging.exception("An error occurred while viewing wallet balance: %s", str(e))
+            logging.exception(
+                "An error occurred while viewing wallet balance: %s", str(e)
+            )
             return None
-
 
     def update_balance(self, wallet_id, type, amount):
         try:
@@ -111,9 +111,11 @@ class Wallet(db.Model):
             return wallet.serialize()
 
         except Exception as e:
-            logging.exception("An error occurred while updating wallet balance: %s", str(e))
+            logging.exception(
+                "An error occurred while updating wallet balance: %s", str(e)
+            )
             return None
-    
+
     def disable_wallet(self, wallet_id, is_disabled=True):
         try:
             wallet = self.query.filter_by(public_id=wallet_id).first()
@@ -122,19 +124,19 @@ class Wallet(db.Model):
 
             if is_disabled:
                 wallet.status = "disabled"
-       
+
             wallet.save()
             return wallet.serialize()
 
         except Exception as e:
             logging.exception("An error occurred while disabling a wallet: %s", str(e))
             return None
-    
+
     def get_wallet(self, wallet_id):
-        print('wallet_id ini', wallet_id)
+        print("wallet_id ini", wallet_id)
         try:
             wallet = self.query.filter_by(public_id=wallet_id).first()
-            print('wallet ini', wallet)
+            print("wallet ini", wallet)
             if not wallet:
                 return None
 

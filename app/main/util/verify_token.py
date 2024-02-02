@@ -12,7 +12,6 @@ load_dotenv()
 secret_key = SECRET_KEY
 
 
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):

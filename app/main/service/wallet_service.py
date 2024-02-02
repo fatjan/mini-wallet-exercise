@@ -45,7 +45,7 @@ def disable_wallet(wallet_id, is_disabled):
         wallet = wallet_model.disable_wallet(wallet_id, is_disabled)
         if not wallet:
             return {"status": "fail", "data": {"error": "Already disabled"}}, 400
-        
+
         response_object = {"data": {"wallet": wallet}, "status": "success"}
         return response_object, 200
     except Exception as e:

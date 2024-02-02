@@ -1,10 +1,10 @@
 from flask_restx import Resource
 from flask import request
 from ..service.wallet_service import (
-    init_wallet, 
-    enable_wallet, 
+    init_wallet,
+    enable_wallet,
     view_wallet_balance,
-    disable_wallet
+    disable_wallet,
 )
 from ...extensions import ns
 from ..util.dto import WalletDto
@@ -35,7 +35,7 @@ class Wallet(Resource):
         """Enable a wallet"""
         customer_id = decoded_token["customer_id"]
         return enable_wallet(customer_id)
-    
+
     @ns.doc(security="bearer")
     @ns.doc(responses={400: "Validation Error"})
     @token_required
@@ -43,7 +43,7 @@ class Wallet(Resource):
         """View wallet balance"""
         customer_id = decoded_token["customer_id"]
         return view_wallet_balance(customer_id)
-    
+
     @ns.doc(security="bearer")
     @ns.doc(responses={400: "Validation Error"})
     @ns.expect(_disable_wallet, validate=True)
