@@ -17,7 +17,7 @@ class Transaction(db.Model):
     transacted_at = db.Column(db.DateTime, nullable=False)
     type = db.Column(db.String(100), nullable=False)
     amount = db.Column(db.Integer, nullable=False)
-    reference_id = db.Column(db.String(100), nullable=False)
+    reference_id = db.Column(db.String(100), nullable=False, unique=True)
 
     def __repr__(self):
         return f"<Transaction(reference_id={self.reference_id}, status={self.status})>"
@@ -87,9 +87,9 @@ class Transaction(db.Model):
                 return None
 
             if transaction_type == "deposit":
-                wallet.update_balance(wallet_id, "deposit", amount)
+                wallet_model.update_balance(wallet_id, "deposit", amount)
             else:
-                wallet.update_balance(wallet_id, "withdrawal", amount)
+                wallet_model.update_balance(wallet_id, "withdrawal", amount)
 
             return wallet.id
         except Exception as e:
@@ -100,6 +100,10 @@ class Transaction(db.Model):
 
     def deposit_to_wallet(self, customer_id, wallet_id, amount, reference_id):
         try:
+            ref_exist = self.check_reference(reference_id)
+            if ref_exist:
+                return None
+            
             wallet_db_id = self.update_wallet_balance(wallet_id, "deposit", amount)
 
             transaction = Transaction(
@@ -143,6 +147,10 @@ class Transaction(db.Model):
 
     def withdraw_from_wallet(self, customer_id, wallet_id, amount, reference_id):
         try:
+            ref_exist = self.check_reference(reference_id)
+            if ref_exist:
+                return None
+            
             wallet_db_id = self.update_wallet_balance(wallet_id, "withdraw", amount)
 
             transaction = Transaction(
@@ -163,4 +171,14 @@ class Transaction(db.Model):
             logging.exception(
                 "An error occurred while withdrawing from wallet: %s", str(e)
             )
+            return None
+
+    def check_reference(self, reference_id):
+        try:
+            transaction = Transaction.query.filter_by(reference_id=reference_id).first()
+            if not transaction:
+                return False
+            return True
+        except Exception as e:
+            logging.exception("An error occurred while checking reference: %s", str(e))
             return None
