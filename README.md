@@ -74,7 +74,7 @@ This repository hosts an API backend service for managing a simple mini wallet.
     - Initiate the authorization process by making a request to the `/api/v1/init` endpoint.
     - Copy the generated token.
     - Click on "Authorize" in the top right corner of the application.
-    - Paste the copied token into the authorization prompt.
+    - Paste the copied token into the authorization prompt with the following format "Token {your_pasted_token}".
 
 9. **Run the tests (without Docker):**
     ```bash
