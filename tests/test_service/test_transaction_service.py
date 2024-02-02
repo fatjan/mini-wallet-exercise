@@ -9,7 +9,7 @@ def fake_id():
     return str(uuid.uuid4())
 
 
-class TestReviewService(TestCase):
+class TestTransactionService(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = create_app(config_object="tests.settings")
