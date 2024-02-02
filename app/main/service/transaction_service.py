@@ -19,6 +19,9 @@ def deposit_to_wallet(customer_id, wallet_id, amount, reference_id):
         deposit = transaction_model.deposit_to_wallet(
             customer_id, wallet_id, amount, reference_id
         )
+        if not deposit:
+            return {"status": "fail", "data": {"error": "Reference ID already exists"}}, 404
+
         response_object = {"data": {"deposit": deposit}, "status": "success"}
         return response_object, 200
     except Exception as e:
@@ -31,6 +34,12 @@ def withdraw_from_wallet(customer_id, wallet_id, amount, reference_id):
         withdraw = transaction_model.withdraw_from_wallet(
             customer_id, wallet_id, amount, reference_id
         )
+        if withdraw == "exists":
+            return {"status": "fail", "data": {"error": "Reference ID already exists"}}, 404
+
+        if not withdraw:
+            return {"status": "fail", "data": {"error": "Insufficient funds"}}, 404
+        
         response_object = {"data": {"withdraw": withdraw}, "status": "success"}
         return response_object, 200
     except Exception as e:
