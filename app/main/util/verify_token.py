@@ -1,15 +1,16 @@
 import jwt
-import os
+import logging as log
 from dotenv import load_dotenv
 from flask import request
 from functools import wraps
-import logging as log
+from app.settings import SECRET_KEY
 
 log.basicConfig(level=log.ERROR)
 
 load_dotenv()
 
-secret_key = "secret_key"
+secret_key = SECRET_KEY
+
 
 
 def token_required(f):

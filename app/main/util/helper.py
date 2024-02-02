@@ -3,7 +3,7 @@ import jwt
 import time
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash
-
+from app.settings import SECRET_KEY
 
 def convert_to_local_time(utc_datetime):
     now_timestamp = time.time()
@@ -44,7 +44,7 @@ def error_handler(error):
     return {"status": "error", "message": message}, 500
 
 
-def create_token(customer_id, wallet_id, secret_key="secret_key"):
+def create_token(customer_id, wallet_id, secret_key=SECRET_KEY):
     token = jwt.encode(
         {
             "customer_id": customer_id,
