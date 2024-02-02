@@ -89,6 +89,28 @@ class TestTransactionService(TestCase):
         mock_deposit_to_wallet.assert_called_once_with(
             customer_id, wallet_id, amount, reference_id
         )
+    
+    @patch("app.main.model.transaction.Transaction.deposit_to_wallet")
+    def test_deposit_to_wallet_with_existing_reference_id(self, mock_deposit_to_wallet):
+        # Arrange
+        customer_id = fake_id()
+        wallet_id = fake_id()
+        amount = 14000
+        reference_id = fake_id()
+        mock_deposit_to_wallet.return_value = None
+
+        # Act
+        response, status_code = deposit_to_wallet(
+            customer_id, wallet_id, amount, reference_id
+        )
+
+        # Assert
+        self.assertEqual(status_code, 404)
+        self.assertEqual(response["status"], "fail")
+        self.assertEqual(response["data"]["error"], "Reference ID already exists")
+        mock_deposit_to_wallet.assert_called_once_with(
+            customer_id, wallet_id, amount, reference_id
+        )
 
     @patch("app.main.model.transaction.Transaction.withdraw_from_wallet")
     def test_withdraw_from_wallet(self, mock_withdraw_from_wallet):
@@ -117,6 +139,28 @@ class TestTransactionService(TestCase):
         self.assertEqual(status_code, 200)
         self.assertEqual(response["status"], "success")
         self.assertEqual(result, expected_response)
+        mock_withdraw_from_wallet.assert_called_once_with(
+            customer_id, wallet_id, amount, reference_id
+        )
+
+    @patch("app.main.model.transaction.Transaction.withdraw_from_wallet")
+    def test_withdraw_from_wallet_with_existing_reference_id(self, mock_withdraw_from_wallet):
+        # Arrange
+        customer_id = fake_id()
+        wallet_id = fake_id()
+        amount = 14000
+        reference_id = fake_id()
+        mock_withdraw_from_wallet.return_value = "exists"
+
+        # Act
+        response, status_code = withdraw_from_wallet(
+            customer_id, wallet_id, amount, reference_id
+        )
+
+        # Assert
+        self.assertEqual(status_code, 404)
+        self.assertEqual(response["status"], "fail")
+        self.assertEqual(response["data"]["error"], "Reference ID already exists")
         mock_withdraw_from_wallet.assert_called_once_with(
             customer_id, wallet_id, amount, reference_id
         )

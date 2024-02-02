@@ -86,7 +86,7 @@ class TestWalletModel(unittest.TestCase):
         result = wallet_model.update_balance(wallet["id"], "deposit", 100)
 
         # Assert
-        self.assertEqual(result["balance"], 100)
+        self.assertEqual(result.balance, 100)
 
     def test_update_balance_withdraw(self):
         # Arrange
@@ -100,7 +100,7 @@ class TestWalletModel(unittest.TestCase):
         result = wallet_model.update_balance(wallet["id"], "withdraw", 50)
 
         # Assert
-        self.assertEqual(result["balance"], 50)
+        self.assertEqual(result.balance, 50)
 
     def test_update_balance_withdraw_more_than_balance(self):
         # Arrange

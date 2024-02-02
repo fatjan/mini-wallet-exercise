@@ -68,6 +68,7 @@ class TestTransactionModel(unittest.TestCase):
     def test_withdraw_from_wallet(self):
         # Arrange
         transaction_model = Transaction()
+        transaction_model.deposit_to_wallet(customer_id, wallet["id"], 2000, fake_id())
         amount = 1000
         reference_id = fake_id()
 
