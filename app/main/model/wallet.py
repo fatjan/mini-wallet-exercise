@@ -16,7 +16,7 @@ class Wallet(db.Model):
     balance = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"<Wallet(owned_by={self.owned_by}, status={self.status})>"
+        return f"<Wallet(public_id={self.public_id}, owned_by={self.owned_by}, status={self.status})>"
 
     def serialize(self):
         enabled_at = convert_to_local_time(self.enabled_at)
@@ -120,4 +120,18 @@ class Wallet(db.Model):
 
         except Exception as e:
             logging.exception("An error occurred while disabling a wallet: %s", str(e))
+            return None
+    
+    def get_wallet(self, wallet_id):
+        print('wallet_id ini', wallet_id)
+        try:
+            wallet = self.query.filter_by(public_id=wallet_id).first()
+            print('wallet ini', wallet)
+            if not wallet:
+                return None
+
+            return wallet
+
+        except Exception as e:
+            logging.exception("An error occurred while getting wallet: %s", str(e))
             return None
