@@ -17,4 +17,4 @@ EXPOSE 5000
 ENV NAME World
 
 # Run app.py when the container launches
-CMD ["python", "app/your_flask_code_files.py"]
+CMD ["python", "app/__init__.py"]
