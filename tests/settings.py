@@ -4,7 +4,7 @@ from environs import Env
 env = Env()
 env.read_env()
 
-db_name = env.str("DB_NAME")
+db_name = env.str("TEST_DB_NAME")
 DATABASE_URI = get_db_uri(db_name=db_name)
 
 ENV = "test"
